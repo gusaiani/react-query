@@ -4,22 +4,27 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { worker } from "@uidotdev/react-query-api";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-new Promise((res) => setTimeout(res, 100))
+const client = new QueryClient();
+
+new Promise(res => setTimeout(res, 100))
   .then(() =>
     worker.start({
       quiet: true,
-      onUnhandledRequest: "bypass",
+      onUnhandledRequest: "bypass"
     })
   )
   .then(() => {
     ReactDOM.render(
       <React.StrictMode>
-        <BrowserRouter>
-          <div className="container">
-            <App />
-          </div>
-        </BrowserRouter>
+        <QueryClientProvider client={client}>
+          <BrowserRouter>
+            <div className="container">
+              <App />
+            </div>
+          </BrowserRouter>
+        </QueryClientProvider>
       </React.StrictMode>,
       document.getElementById("root")
     );
