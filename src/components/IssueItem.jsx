@@ -3,6 +3,8 @@ import { GoIssueOpened, GoIssueClosed, GoComment } from "react-icons/go";
 import { relativeDate } from "../helpers/relativeDate";
 import { useUserData } from "../helpers/useUserData";
 
+import Label from "./Label";
+
 export function IssueItem({
   title,
   number,
@@ -11,7 +13,7 @@ export function IssueItem({
   createdBy,
   createdDate,
   labels,
-  status,
+  status
 }) {
   const assigneeUser = useUserData(assignee);
   const createdByUser = useUserData(createdBy);
@@ -27,10 +29,8 @@ export function IssueItem({
       <div className="issue-content">
         <span>
           <Link to={`/issue/${number}`}>{title}</Link>
-          {labels.map((label) => (
-            <span key={label} className={`label red`}>
-              {label}
-            </span>
+          {labels.map(label => (
+            <Label key={label} label={label} />
           ))}
         </span>
         <small>
